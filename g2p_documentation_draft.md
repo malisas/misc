@@ -107,7 +107,7 @@ http://yuml.me/edit/25343da1
 }
 </pre>
 
-2) This query defines `feature` but leaves the `phenotype` and `evidence` fields undefined. All associations which include the specified `feature` (an `ExternalIdentifier`) will be returned.
+2) This query defines `feature` but leaves the `phenotype` and `evidence` fields undefined. All associations which include the specified `feature` (which is defined using the `ExternalIdentifier` type) will be returned.
 <pre>
 {
   "pageToken": null,
