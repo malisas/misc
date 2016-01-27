@@ -71,20 +71,74 @@ http://yuml.me/edit/bf06b90a
 http://yuml.me/edit/25343da1
 
 ## Use cases
---> I guess i should come up with this stuff...maybe make use of Brian's example queries:
 
-{"pageToken": null, "phenotype": null, "feature": "KIT *wild", "pageSize": null, "evidence": null}
-{"pageToken": null, "phenotype": null, "feature": "KIT *wild", "pageSize": null, "evidence": "imatinib"}
-{"pageToken": null, "phenotype": "GIST", "feature": "KIT *wild", "pageSize": null, "evidence": "imatinib"}
-{"pageToken": null, "phenotype": null, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": null}
-{"pageToken": null, "phenotype": {"ids": [{"identifier": "37da8697", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": null}
-{"pageToken": null, "phenotype": {"ids": [{"identifier": "37da8697", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": {"ids": [{"identifier": "DB00398", "version": "*", "database": "http://www.drugbank.ca/drugs/"}]}}
-{"pageToken": null, "phenotype": {"ids": [{"identifier": "37da8697", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": {"ids": [{"identifier": "DB00619", "version": "*", "database": "FOO"}]}}
+1) This is an example of a query formatted in JSON. In this case, the `phenotype`, `feature`, and `evidence` fields are all defined using `ExternalIdentifier`s which point to a specific item in a database. 
+<pre>
+{
+  "pageToken": null,
+  "phenotype": {
+    "ids": [
+      {
+        "identifier": "37da8697",
+        "version": "*",
+        "database": "http:\/\/ohsu.edu\/cgd\/"
+      }
+    ]
+  },
+  "feature": {
+    "ids": [
+      {
+        "identifier": "4841bf74",
+        "version": "*",
+        "database": "http:\/\/ohsu.edu\/cgd\/"
+      }
+    ]
+  },
+  "pageSize": null,
+  "evidence": {
+    "ids": [
+      {
+        "identifier": "DB00619",
+        "version": "*",
+        "database": "FOO"
+      }
+    ]
+  }
+}
+</pre>
 
-...or come up with my own. I can find some ontology terms and throw them in and combine different search terms. Maybe have a diagram with arrows pointing to each sub-field.
+2) This query defines `feature` but leaves the `phenotype` and `evidence` fields undefined. All associations which include the specified `feature` (an `ExternalIdentifier`) will be returned.
+<pre>
+{
+  "pageToken": null,
+  "phenotype": null,
+  "feature": {
+    "ids": [
+      {
+        "identifier": "4841bf74",
+        "version": "*",
+        "database": "http:\/\/ohsu.edu\/cgd\/"
+      }
+    ]
+  },
+  "pageSize": null,
+  "evidence": null
+}
+</pre>
+
+3) This query defines the `phenotype`, `feature`, and `evidence` terms using strings. When this occurs, the database is searched for all matches to those strings (not sure about the specifics here, or how the *wild syntax works). `GIST` stands for 'Gastrointestinal stromal tumor', and `imatinib` is a cancer drug. `KIT` is a gene implicated in the pathogenesis of several cancer types, including GIST.
+<pre>
+{
+  "pageToken": null,
+  "phenotype": "GIST",
+  "feature": "KIT *wild",
+  "pageSize": null,
+  "evidence": "imatinib"
+}
+</pre>
 
 ## Future work
 Schema constraints: there are several fields within the schemas that are defined as non-null. This may be fine when creating an entity from a data store, however, they are problematic when creating an entity to be used in a query.
 
 ## Discussion of Ontologies
-Not included here, but discussed near the end of this: https://github.com/ga4gh/g2p-team/issues/14#issuecomment-173657435
+I'm not sure how we want to include this. See the bottom of this page: https://github.com/ga4gh/g2p-team/issues/14#issuecomment-173657435
