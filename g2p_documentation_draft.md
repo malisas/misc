@@ -1,13 +1,13 @@
 ## Summary
 
-This API endpoint allows users to find existing genotype-phenotype associations based on a query of one or more features, phenotypes, and/or evidence terms. The API is designed to accomodate search terms (i.e. feature, phenotype, or evidence terms) specified as either a string, external identifier, ontology identifier, or as an 'entity' (See Data Model section). This flexibility in the schema allows users to specify a wide range of queries and enables a wide range of data to be stored in the database. 
+This API endpoint allows users to search for genotype-phenotype associations in the GA4GH datastore. The user can search for associations by building queries composed of features, phenotypes, and/or evidence terms. The API is designed to accommodate search terms specified as either a string, external identifier, ontology identifier, or as an 'entity' (See Data Model section). This flexibility in the schema allows a wide range of data to be stored in the database and allows users to express a wide range of queries.
 
 Users will receive an array of associations as a response. Associations contain description and environment fields in addition to the relevant feature, phenotype, and evidence fields for that instance of association.
 
 ## API
 
 ### Request
-The GA4GH schemas define a single endpoint `/genotypephenotype/search` which accepts a POST of a [request body](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102), possibly containing a feature, phenotype, and/or evidence, which are combined as a logical AND to query the underlying datastore. Missing types are treated as a `wildcard`, returning all data.
+The G2P schemas define a single endpoint `/genotypephenotype/search` which accepts a POST of a [request body](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102), possibly containing a feature, phenotype, and/or evidence, which are combined as a logical AND to query the underlying datastore. Missing types are treated as a wildcard, returning all data.
 
 ### Response
 [Responses](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L130) of matching data are returned as a list of  [FeaturePhenotypeAssociation](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L132)s.
