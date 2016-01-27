@@ -27,9 +27,9 @@ The SearchFeaturesRequest record has the following data structure (super-fields 
 | Item  | Allowed Types/Sub-field Types | Description/Example?? |
 | :------------ | :-----------: | :-------------------: |
 | [SearchFeaturesRequest](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102) | feature, phenotype, evidence | n/a |
-| [feature](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L104) | `null`, `string`, ExternalIdentifierQuery, OntologyTermQuery, GenomicFeatureQuery | n/a |
-| [phenotype](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L107) | `null`, `string`, ExternalIdentifierQuery, OntologyTermQuery, PhenotypeQuery | n/a |
-| [evidence](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L110) | `null`, `string`, ExternalIdentifierQuery, OntologyTermQuery, EvidenceQuery | n/a |
+| [feature](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L105) | `null`, `string`, ExternalIdentifierQuery, OntologyTermQuery, GenomicFeatureQuery | n/a |
+| [phenotype](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L108) | `null`, `string`, ExternalIdentifierQuery, OntologyTermQuery, PhenotypeQuery | n/a |
+| [evidence](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L111) | `null`, `string`, ExternalIdentifierQuery, OntologyTermQuery, EvidenceQuery | n/a |
 | [ExternalIdentifierQuery](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L69) | ExternalIdentifier | n/a |
 | [OntologyTermQuery](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L61) | OntologyTerm | n/a |
 | [GenomicFeatureQuery](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L46) | Feature | n/a |
