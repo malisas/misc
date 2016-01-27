@@ -1,6 +1,8 @@
 ## Summary
 
-This API endpoint allows users to find existing genotype-phenotype associations based on a query of one or more features, phenotypes, and/or evidence terms. The API is designed to accomodate search terms (i.e. feature, phenotype, or evidence terms) specified as either a string, external identifier, ontology identifier, or as an 'entity' [See Section 391]. This flexibility in the schema allows users to specify a wide range of queries and enables a wide range of data to be stored in the database. Users will receive an array of associations as a response. Associations contain description and environment fields in addition to the relevant feature, phenotype, and evidence fields for that instance of association.
+This API endpoint allows users to find existing genotype-phenotype associations based on a query of one or more features, phenotypes, and/or evidence terms. The API is designed to accomodate search terms (i.e. feature, phenotype, or evidence terms) specified as either a string, external identifier, ontology identifier, or as an 'entity' (See Data Model section). This flexibility in the schema allows users to specify a wide range of queries and enables a wide range of data to be stored in the database. 
+
+Users will receive an array of associations as a response. Associations contain description and environment fields in addition to the relevant feature, phenotype, and evidence fields for that instance of association.
 
 ## API
 
@@ -11,9 +13,9 @@ The GA4GH schemas define a single endpoint `/genotypephenotype/search` which acc
 [Responses](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L130) of matching data are returned as a list of  [FeaturePhenotypeAssociation](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L132)s.
 
 ## Data Model
-Due to the flexibility of the data model, users have a number of options for specifying each query term (e.g. a feature). 
-
 As shown below, the SearchFeaturesRequest and SearchFeaturesResponse records each have their own data structures, but they rely on many of the same types (see the 3rd table for shared data-types). Many types rely heavily on the concept of an [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) (see end of document for discussion on usage of OntologyTerms).
+
+Due to the flexibility of the data model, users have a number of options for specifying each query term. For instance, a feature can be defined as either a string, an external identifier, an ontology identifier, or as a 'feature entity'.
 
 The [SearchFeaturesRequest](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102) record maps to the body of `POST /genotypephenotype/search` as JSON.
 The SearchFeaturesRequest record has the following data structure (super-fields listed first):
@@ -44,13 +46,14 @@ The response SearchFeaturesResponse has the following structure:
 | [environmentalContexts](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L49) | id, OntologyTerm, description | n/a |
 | [Evidence](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L113) | OntologyTerm, description | n/a |
 
-
 Shared data types:
 
 | Item  | Allowed Types/Sub-field Types | Description/Example?? |
 | :------------ | :-----------: | :-------------------: |
 | [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) | ontologySource, id, name | n/a |
-| [Feature](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | ?? | n/a |
+| [Feature](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | id, parentIds, featureSetId, referenceName, start, end, strand, featureType, attributes | The first six fields here are strings/arrays of strings |
+| [strand](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L134) | [Strand](???????? not sure where to find in schema) |  n/a |
+| [featureType](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | OntologyTerm |  n/a |
 | [PhenotypeInstance](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L77) | id, OntologyTerm, qualifier, ageOfOnset, description | n/a |
 | [qualifier](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L90) | 'null', OntologyTerm | i.e. an array of OntologyTerm(s) |
 | [ageOfOnset](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L97) | 'null', OntologyTerm | n/a |
@@ -66,10 +69,20 @@ http://yuml.me/edit/bf06b90a
 http://yuml.me/edit/25343da1
 
 ## Use cases
---> I guess i should come up with this stuff
+--> I guess i should come up with this stuff...maybe make use of Brian's example queries:
+
+{"pageToken": null, "phenotype": null, "feature": "KIT *wild", "pageSize": null, "evidence": null}
+{"pageToken": null, "phenotype": null, "feature": "KIT *wild", "pageSize": null, "evidence": "imatinib"}
+{"pageToken": null, "phenotype": "GIST", "feature": "KIT *wild", "pageSize": null, "evidence": "imatinib"}
+{"pageToken": null, "phenotype": null, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": null}
+{"pageToken": null, "phenotype": {"ids": [{"identifier": "37da8697", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": null}
+{"pageToken": null, "phenotype": {"ids": [{"identifier": "37da8697", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": {"ids": [{"identifier": "DB00398", "version": "*", "database": "http://www.drugbank.ca/drugs/"}]}}
+{"pageToken": null, "phenotype": {"ids": [{"identifier": "37da8697", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "feature": {"ids": [{"identifier": "4841bf74", "version": "*", "database": "http://ohsu.edu/cgd/"}]}, "pageSize": null, "evidence": {"ids": [{"identifier": "DB00619", "version": "*", "database": "FOO"}]}}
+
+...or come up with my own. I can find some ontology terms and throw them in and combine different search terms. Maybe have a diagram with arrows pointing to each sub-field.
 
 ## Future work
 Schema constraints: there are several fields within the schemas that are defined as non-null. This may be fine when creating an entity from a data store, however, they are problematic when creating an entity to be used in a query.
 
-## Discussion of Usage of Ontologies
+## Discussion of Ontologies
 Not included here, but discussed near the end of this: https://github.com/ga4gh/g2p-team/issues/14#issuecomment-173657435
