@@ -64,12 +64,6 @@ Shared data types:
 | description | `null`, `string` | n/a |
 | name | `null`, `string` | n/a |
 
-![image](https://cloud.githubusercontent.com/assets/47808/9643362/4e081ae0-5176-11e5-8550-abd9c7c43d23.png)
-http://yuml.me/edit/bf06b90a
-
-![image](https://cloud.githubusercontent.com/assets/47808/9339152/53d42aca-459d-11e5-8c91-204f42dc233a.png)
-http://yuml.me/edit/25343da1
-
 ## Use cases
 
 1) This is an example of a query formatted in JSON. (Ideally I should explain the biological significance of the query here, say `37da8697` has to do with a phenotype like "back pain") In this case, the `phenotype`, `feature`, and `evidence` fields are all defined using `ExternalIdentifier`s which point to a specific item in a database. 
@@ -140,6 +134,7 @@ http://yuml.me/edit/25343da1
 4) It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologytermQuery` which is an array of multiple `OntologyTerms`s. This will demonstrate more use cases....
 
 ## Future work
+(copied from old document)
 Schema constraints: there are several fields within the schemas that are defined as non-null. This may be fine when creating an entity from a data store, however, they are problematic when creating an entity to be used in a query.
 
 ## Discussion of Ontologies
