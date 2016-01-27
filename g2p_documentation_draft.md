@@ -5,20 +5,22 @@ This API endpoint allows users to find existing genotype-phenotype associations 
 ## API
 
 ### Request
-The GA4GH schemas define a single endpoint `/genotypephenotype/search` which accepts a POST of a [request body](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102) possibly containing a feature, phenotype, and/or evidence, which are combined as a logical AND to query the underlying datastore. Missing types are treated as a `wildcard`, returning all data.
+The GA4GH schemas define a single endpoint `/genotypephenotype/search` which accepts a POST of a [request body](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102), possibly containing a feature, phenotype, and/or evidence, which are combined as a logical AND to query the underlying datastore. Missing types are treated as a `wildcard`, returning all data.
 
 ![image](https://cloud.githubusercontent.com/assets/47808/9643362/4e081ae0-5176-11e5-8550-abd9c7c43d23.png)
 http://yuml.me/edit/bf06b90a
 
 ### Response
-Responses of matching data are returned as a list of  [FeaturePhenotypeAssociation](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L132).
+Responses of matching data are returned as a list of  [FeaturePhenotypeAssociation](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L132)s.
 
 ![image](https://cloud.githubusercontent.com/assets/47808/9339152/53d42aca-459d-11e5-8c91-204f42dc233a.png)
 
 http://yuml.me/edit/25343da1
 
 ## Data Model
-As shown in the tables below, due to the flexibility of the data model users have a number of options for how they want to specify each query term (e.g. a feature). The SearchFeaturesRequest and SearchFeaturesResponse records each have their own data structures, but share many of the same types (see the 3rd table for shared data-types). Many types rely heavily on the concept of an [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) (see end of document for discussion on usage of OntologyTerms).
+Due to the flexibility of the data model, users have a number of options for specifying each query term (e.g. a feature). 
+
+As shown below, the SearchFeaturesRequest and SearchFeaturesResponse records each have their own data structures, but they rely on many of the same types (see the 3rd table for shared data-types). Many types rely heavily on the concept of an [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) (see end of document for discussion on usage of OntologyTerms).
 
 The SearchFeaturesRequest record has the following data structure (super-fields listed first):
 
