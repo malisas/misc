@@ -33,7 +33,7 @@ The SearchFeaturesRequest record has the following data structure (super-fields 
 | [EvidenceQuery](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L34) | OntologyTerm | check gabriel's changes??? |
 
 [SearchFeaturesResponse](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L130) is the response from `POST /genotypephenotype/search`, expressed as JSON.
-The response SearchFeaturesResponse has the following structure:
+It has the following structure:
 
 | Item  | Allowed Types/Sub-field Types | Description/Example?? |
 | :------------ | :-----------: | :-------------------: |
@@ -55,12 +55,12 @@ Shared data types:
 | [strand](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L134) | [Strand](???????? not sure where to find in schema) |  n/a |
 | [featureType](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | OntologyTerm |  n/a |
 | [PhenotypeInstance](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L77) | id, OntologyTerm, qualifier, ageOfOnset, description | n/a |
-| [qualifier](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L90) | 'null', OntologyTerm | i.e. an array of OntologyTerm(s) |
-| [ageOfOnset](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L97) | 'null', OntologyTerm | n/a |
+| [qualifier](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L90) | `null`, OntologyTerm | i.e. an array of OntologyTerm(s) |
+| [ageOfOnset](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L97) | `null`, OntologyTerm | n/a |
 | [ontologySource](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L15) | `string` | n/a |
-| id | 'null', 'string' | Note: Some id's are just strings, some also take null.... |
-| description | 'null', 'string' | n/a |
-| name | 'null', 'string' | n/a |
+| id | `null`, `string` | Note: Some id's are just strings, some also take null.... |
+| description | `null`, `string` | n/a |
+| name | `null`, `string` | n/a |
 
 ![image](https://cloud.githubusercontent.com/assets/47808/9643362/4e081ae0-5176-11e5-8550-abd9c7c43d23.png)
 http://yuml.me/edit/bf06b90a
