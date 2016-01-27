@@ -15,11 +15,11 @@ The G2P schemas define a single endpoint `/genotypephenotype/search` which accep
 ## Data Model
 The POST data sent as part of `/genotypephenotype/search` must be in JSON format and must obey the [SearchFeaturesRequest](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102) schema. [SearchFeaturesResponse](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L130) is the response from `POST /genotypephenotype/search`, expressed as JSON.
 
-As shown below, the SearchFeaturesRequest and SearchFeaturesResponse records each have their own data structures, but they rely on many of the same types (see the 3rd table for shared data-types). Many types rely heavily on the concept of an [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) (see end of document for discussion on usage of OntologyTerms).
+As shown below, the SearchFeaturesRequest and SearchFeaturesResponse records each have their own data structures, but they use many of the same types (see the 3rd table for shared data-types). Many types rely heavily on the concept of an [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) (see end of document for discussion on usage of OntologyTerms).
 
 Due to the flexibility of the data model, users have a number of options for specifying each query term. For instance, a feature can be defined as either a string, an external identifier, an ontology identifier, or as a 'feature entity'.
 
-The SearchFeaturesRequest record has the following data structure (super-fields listed first):
+The SearchFeaturesRequest record has the following data structure (sub-fields are indented):
 
 | Item  | Allowed Types/Sub-field Types | Description/Example?? |
 | :------------ | :-----------: | :-------------------: |
