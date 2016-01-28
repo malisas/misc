@@ -5,11 +5,10 @@ This API endpoint allows users to search for genotype-phenotype associations in 
 Users will receive an array of associations as a response. Associations contain description and environment fields in addition to the relevant feature, phenotype, and evidence fields for that instance of association.
 
 
-
 ## API
 
 ### Request
-The G2P schemas define a single endpoint `/genotypephenotype/search` which accepts a POST of a [request body](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102) in JSON. The request may contain a feature, phenotype, and/or evidence, which are combined as a logical AND to query the underlying datastore. Missing types are treated as a wildcard, returning all data.
+The G2P schemas define a single endpoint `/genotypephenotype/search` which accepts a POST of a [request body](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L102) in [JSON](http://json.org/example.html) format. The request may contain a feature, phenotype, and/or evidence, which are combined as a logical AND to query the underlying datastore. Missing types are treated as a wildcard, returning all data.
 
 ### Response
 [Responses](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L130) of matching data are returned as a list of  [`FeaturePhenotypeAssociation`](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L132)s.
@@ -21,10 +20,8 @@ As shown below, the `SearchFeaturesRequest` and `SearchFeaturesResponse` records
 
 Due to the flexibility of the data model, users have a number of options for specifying each query term. For instance, a feature can be defined as either a string, an external identifier, an ontology identifier, or as a feature 'entity'.
 
-**BW:  I would eliminate the description/example?? column**
-
-The `SearchFeaturesRequest` record has the following data structure (sub-fields are indented):
-Note: Externally shared data types like `ExternalIdentifier`, `OntologyTerm`, `Feature`, and `PhenotypeInstance` are defined in the 3rd table. Shared data types specific to `SearchFeaturesRequest` are defined within the table in a Shared Data Types section.
+The `SearchFeaturesRequest` record has the following data structure (sub-fields are indented):  
+<sub>Note: Externally shared data types like `ExternalIdentifier`, `OntologyTerm`, `Feature`, and `PhenotypeInstance` are defined in the 3rd table. Shared data types specific to `SearchFeaturesRequest` are defined within the table in a **Shared Data Types** section.<sub/>
 
 | Item  | Allowed Types/Sub-field Types |
 | :------------ | :-----------: |
@@ -44,7 +41,7 @@ Note: Externally shared data types like `ExternalIdentifier`, `OntologyTerm`, `F
 | Item  | Allowed Types/Sub-field Types |
 | :------------ | :-----------: |
 | [SearchFeaturesResponse](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L130) | associations, [nextPageToken](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L141) |
-| &nbsp;&nbsp;&nbsp;\|---&nbsp;[associations](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L134) | FeaturePhenotypeAssociation |
+| &nbsp;&nbsp;&nbsp;\|---&nbsp;[associations](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotypemethods.avdl#L134) | *array*: FeaturePhenotypeAssociation |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\|---&nbsp;[FeaturePhenotypeAssociation](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L132) | id, features, evidence, phenotype, description, environmentalContexts |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\|---&nbsp;[features](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L147) | Feature |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\|---&nbsp;[evidence](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L153) | [Evidence](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L113): OntologyTerm, description |
@@ -52,24 +49,26 @@ Note: Externally shared data types like `ExternalIdentifier`, `OntologyTerm`, `F
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\|---&nbsp;[environmentalContexts](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L49) | id, OntologyTerm, description |
 
 
-Data types which are shared between `SearchFeaturesRequest` and `SearchFeaturesResponse`:
+Data types used by both `SearchFeaturesRequest` and `SearchFeaturesResponse`:
 
 | Item  | Allowed Types/Sub-field Types |
 | :------------ | :-----------: |
 | [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) | ontologySource, id, name |
 | &nbsp;&nbsp;&nbsp;\|---&nbsp;[ontologySource](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L15) | `string` |
-| [Feature](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | id, parentIds, featureSetId, referenceName, start, end, strand, featureType, attributes *Note: The first six fields here are strings/arrays of strings* |
-| &nbsp;&nbsp;&nbsp;\|---&nbsp;[strand](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L134) | *union*: `null`, [Strand](???????? not sure where to find in schema) |
+| [Feature](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | id, parentIds, featureSetId, referenceName, start, end, strand, featureType, attributes <sub>Note: The first six fields here are strings or arrays of strings<sub/> |
+| &nbsp;&nbsp;&nbsp;\|---&nbsp;[strand](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L134) | *union*: `null`, [Strand](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/common.avdl#L13) |
 | &nbsp;&nbsp;&nbsp;\|---&nbsp;[featureType](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L105) | OntologyTerm |
 | &nbsp;&nbsp;&nbsp;\|---&nbsp;[attributes](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/sequenceAnnotations.avdl#L54) | *array* vals: `string`, ExternalIdentifier, OntologyTerm |
 | [PhenotypeInstance](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L77) | id, OntologyTerm, qualifier, ageOfOnset, description |
 | &nbsp;&nbsp;&nbsp;\|---&nbsp;[qualifier](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L90) | *array*: `null`, OntologyTerm |
 | &nbsp;&nbsp;&nbsp;\|---&nbsp;[ageOfOnset](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/genotypephenotype.avdl#L97) | *union*: `null`, OntologyTerm |
-| id (typical) | `null`, `string` |
+| id | `null`, `string` <sub>Note: Not all `id`s allow `null`<sub/> |
 | description | `null`, `string` |
 | name | `null`, `string` |
 
 ## Use cases
+
+
 
 1) This is an example of a query formatted in JSON. (Ideally I should explain the biological significance of the query here, say `37da8697` has to do with a phenotype like "back pain") In this case, the `phenotype`, `feature`, and `evidence` fields are all defined using `ExternalIdentifier`s which point to a specific item in a database. 
 <pre>
@@ -125,7 +124,15 @@ Data types which are shared between `SearchFeaturesRequest` and `SearchFeaturesR
 }
 </pre>
 
-3) This query defines the `phenotype`, `feature`, and `evidence` terms using strings. When this occurs, the database is searched for all matches to those strings (not sure about the specifics here, or how the *wild syntax works). `GIST` stands for 'Gastrointestinal stromal tumor', and `imatinib` is a cancer drug. `KIT` is a gene implicated in the pathogenesis of several cancer types, including GIST.
+3) 
+
+As a [role], given [some pre-condition], when [some event], in order to [get some value], I [want the system to do this]
+
+As a genomics researcher,  given a patient with a cold, when I have a proposed drug, in order to identify what features have the best response, I need a list of features
+
+
+
+This query defines the `phenotype`, `feature`, and `evidence` terms using strings. When this occurs, the database is searched for all matches to those strings (not sure about the specifics here, or how the *wild syntax works). `GIST` stands for 'Gastrointestinal stromal tumor', and `imatinib` is a cancer drug. `KIT` is a gene implicated in the pathogenesis of several cancer types, including GIST.
 <pre>
 {
   "pageToken": null,
@@ -136,7 +143,7 @@ Data types which are shared between `SearchFeaturesRequest` and `SearchFeaturesR
 }
 </pre>
 
-4) It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologytermQuery` which is an array of multiple `OntologyTerms`s. This will demonstrate more use cases....
+4) It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologyTermQuery` which is an array of multiple `OntologyTerms`s. This will demonstrate more use cases....
 
 ## Future work
 (copied from old document)
