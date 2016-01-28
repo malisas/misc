@@ -1,8 +1,10 @@
 ## Summary
 
-This API endpoint allows users to search for genotype-phenotype associations in the GA4GH datastore. The user can search for associations by building queries composed of features, phenotypes, and/or evidence terms. The API is designed to accommodate search terms specified as either a string, external identifier, ontology identifier, or as an 'entity' (See Data Model section). This flexibility in the schema allows a variety of data to be stored in the database and allows users to express a wide range of queries.
+This API endpoint allows users to search for genotype-phenotype associations in a GA4GH datastore. The user can search for associations by building queries composed of features, phenotypes, and/or evidence terms. The API is designed to accommodate search terms specified as either a string, external identifier, ontology identifier, or as an 'entity' (See Data Model section).  These terms are combined as an `AND` of `(feature && phenotype && evidence)`. This flexibility in the schema allows a variety of data to be stored in the database and allows users to express a wide range of queries.
 
 Users will receive an array of associations as a response. Associations contain description and environment fields in addition to the relevant feature, phenotype, and evidence fields for that instance of association.
+
+
 
 ## API
 
@@ -18,6 +20,8 @@ The POST data sent as part of `/genotypephenotype/search` must be in JSON format
 As shown below, the SearchFeaturesRequest and SearchFeaturesResponse records each have their own data structures, but they use many of the same types (see the 3rd table for shared data-types). Many types rely heavily on the concept of an [OntologyTerm](https://github.com/ga4gh/schemas/blob/be171b00a5f164836dfd40ea5ae75ea56924d316/src/main/resources/avro/ontologies.avdl#L10) (see end of document for discussion on usage of OntologyTerms).
 
 Due to the flexibility of the data model, users have a number of options for specifying each query term. For instance, a feature can be defined as either a string, an external identifier, an ontology identifier, or as a 'feature entity'.
+
+**BW:  I would eliminate the description/example?? column**
 
 The SearchFeaturesRequest record has the following data structure (sub-fields are indented):
 
@@ -138,4 +142,6 @@ Shared data types:
 Schema constraints: there are several fields within the schemas that are defined as non-null. This may be fine when creating an entity from a data store, however, they are problematic when creating an entity to be used in a query.
 
 ## Discussion of Ontologies
+
+** BW: I can handle this...
 I'm not sure how we want to include this. See the bottom of this page: https://github.com/ga4gh/g2p-team/issues/14#issuecomment-173657435
