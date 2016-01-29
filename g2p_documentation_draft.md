@@ -84,8 +84,8 @@ I could then submit the following query to `/genotypephenotype/search`, formatte
 </pre>
 This query defines the `phenotype`, `feature`, and `evidence` terms using strings. When this occurs, the database is searched for all matches to those strings.
 
-**Note/issues: I'm not sure how the *wild syntax works. Also not sure why "imatinib" is considered evidence. Association '<http://ohsu.edu/cgd/4657f28c>' of the [Monarch data](http://nif-crawler.neuinfo.org/monarch/ttl/cgd.ttl) lists "imatinib" as  environment, not evidence. Can those two fields be considered the same thing  **
-**Also, It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologyTermQuery`, which is an array of multiple `OntologyTerms`s. This will demonstrate more use cases....**
+<sub>**Note/issues: I'm not sure how the \*wild syntax works. Also not sure why "imatinib" is considered evidence. Association 'http://ohsu.edu/cgd/4657f28c' of the [Clinical Genomics Knowledge Base](http://nif-crawler.neuinfo.org/monarch/ttl/cgd.ttl) lists "imatinib" as  environment, not evidence. Can those two fields be considered the same thing?  
+Also, It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologyTermQuery`, which is an array of multiple `OntologyTerm`s. This will demonstrate more use cases....**</sub>
 
 I will receive the following response:
 <pre>
@@ -140,7 +140,7 @@ I will receive the following response:
   "nextPageToken": null
 }
 </pre>
-The links in the `associations` field could (hypothetically) be followed to discover that [patients with wild-type *KIT* and GIST have decreased sensitivity to therapy with imatinib](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2651076/).
+The URI's in the `associations` field could - hypothetically - be followed to discover that [GIST patients with wild-type *KIT* have decreased sensitivity to therapy with imatinib](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2651076/).
 
 If I wanted to be more specific, I could specify *KIT* by its `ExternalIdentifier` in the `feature` field:
 <pre>
@@ -156,9 +156,9 @@ If I wanted to be more specific, I could specify *KIT* by its `ExternalIdentifie
 </pre>
 If I left the `phenotype` and `evidence` fields as `null`, I would receive back all associations which involve *KIT* as a feature.
 
-2) As a non-Hodgkin's lymphoma researcher, I may know that the gene *CD20* has abnormal expression in [Hodgkin's lymphoma](http://purl.obolibrary.org/obo/DOID_8567). I might be interested in knowing if *CD20* also has abnormal expression in [non-Hodgkin lymphoma](http://purl.obolibrary.org/obo/DOID_0060060). Therefore I could perform a query with *CD20* as a feature, non-Hodgkin's lymphoma as a phenotype, and [DNA microarray](http://www.ontobee.org/ontology/OBI?iri=http://purl.obolibrary.org/obo/OBI_0400148) as the evidence type.
+2) As a non-Hodgkin's lymphoma researcher, I may know that the gene *CD20* has abnormal expression in [`Hodgkin's lymphoma`](http://purl.obolibrary.org/obo/DOID_8567). I might be interested in knowing if *CD20* also has abnormal expression in [`non-Hodgkin lymphoma`](http://purl.obolibrary.org/obo/DOID_0060060). Therefore I could perform a query with *CD20* as a feature, non-Hodgkin's lymphoma as a phenotype, and [`DNA microarray`](http://www.ontobee.org/ontology/OBI?iri=http://purl.obolibrary.org/obo/OBI_0400148) as the evidence type.
 
-3) As a genetic counselor, I may be wondering if a mutation in one of my clients' genes has ever been associated with a disease. I could then do a query based on the gene name as the feature and [disease](http://purl.obolibrary.org/obo/DOID_4) as the phenotype.
+3) As a genetic counselor, I may be wondering if a mutation in one of my clients' genes has ever been associated with a disease. I could then do a query based on the gene name as the feature and [`disease`](http://purl.obolibrary.org/obo/DOID_4) as the phenotype.
 
 ## Future work
 (copied from old document)
