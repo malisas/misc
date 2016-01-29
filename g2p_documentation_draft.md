@@ -70,71 +70,9 @@ Data types used by both `SearchFeaturesRequest` and `SearchFeaturesResponse`:
 
 ## Use cases
 
+1) As a clinician or a genomics researcher, I may have a patient with Gastrointestinal stromal tumor (or `GIST`) and a proposed drug for treatment (`imatinib`). In order to identify whether the patient would respond well to treatment with with the drug, I need a list of features (e.g. genotypes) which are associated with the sensitivity of GIST to imatinib. Suppose I am also interested in a specific gene, `KIT`, which is implicated in the pathogenesis of several cancer types.
 
-
-1) This is an example of a query formatted in JSON. (Ideally I should explain the biological significance of the query here, say `37da8697` has to do with a phenotype like "back pain") In this case, the `phenotype`, `feature`, and `evidence` fields are all defined using `ExternalIdentifier`s which point to a specific item in a database. 
-<pre>
-{
-  "pageToken": null,
-  "phenotype": {
-    "ids": [
-      {
-        "identifier": "37da8697",
-        "version": "*",
-        "database": "http:\/\/ohsu.edu\/cgd\/"
-      }
-    ]
-  },
-  "feature": {
-    "ids": [
-      {
-        "identifier": "4841bf74",
-        "version": "*",
-        "database": "http:\/\/ohsu.edu\/cgd\/"
-      }
-    ]
-  },
-  "pageSize": null,
-  "evidence": {
-    "ids": [
-      {
-        "identifier": "DB00619",
-        "version": "*",
-        "database": "FOO"
-      }
-    ]
-  }
-}
-</pre>
-
-2) This query defines `feature` but leaves the `phenotype` and `evidence` fields undefined. All associations which include the specified `feature` (which is defined using the `ExternalIdentifier` type) will be returned.
-<pre>
-{
-  "pageToken": null,
-  "phenotype": null,
-  "feature": {
-    "ids": [
-      {
-        "identifier": "4841bf74",
-        "version": "*",
-        "database": "http:\/\/ohsu.edu\/cgd\/"
-      }
-    ]
-  },
-  "pageSize": null,
-  "evidence": null
-}
-</pre>
-
-3) 
-
-As a [role], given [some pre-condition], when [some event], in order to [get some value], I [want the system to do this]
-
-As a genomics researcher,  given a patient with a cold, when I have a proposed drug, in order to identify what features have the best response, I need a list of features
-
-
-
-This query defines the `phenotype`, `feature`, and `evidence` terms using strings. When this occurs, the database is searched for all matches to those strings (not sure about the specifics here, or how the *wild syntax works). `GIST` stands for 'Gastrointestinal stromal tumor', and `imatinib` is a cancer drug. `KIT` is a gene implicated in the pathogenesis of several cancer types, including GIST.
+I could then submit the following query to `/genotypephenotype/search`, formatted in JSON:
 <pre>
 {
   "pageToken": null,
@@ -144,8 +82,82 @@ This query defines the `phenotype`, `feature`, and `evidence` terms using string
   "evidence": "imatinib"
 }
 </pre>
+This query defines the `phenotype`, `feature`, and `evidence` terms using strings. When this occurs, the database is searched for all matches to those strings.
 
-4) It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologyTermQuery` which is an array of multiple `OntologyTerms`s. This will demonstrate more use cases....
+**Note/issues: I'm not sure how the *wild syntax works. Also not sure why "imatinib" is considered evidence. Association '<http://ohsu.edu/cgd/4657f28c>' of the [Monarch data](http://nif-crawler.neuinfo.org/monarch/ttl/cgd.ttl) lists "imatinib" as  environment, not evidence. Can those two fields be considered the same thing  **
+**Also, It might be good to include a query which uses `GenomicFeatureQuery` or an `OntologyTermQuery`, which is an array of multiple `OntologyTerms`s. This will demonstrate more use cases....**
+
+I will receive the following response:
+<pre>
+{
+  "associations": [
+	{
+  	"evidence": [
+    	{
+      	"description": null,
+      	"evidenceType": {
+        	"ontologySource": "http://ohsu.edu/cgd/",
+        	"id": "489e03d2",
+        	"name": "late trials"
+      	}
+    	}
+  	],
+  	"phenotype": {
+    	"type": {
+      	"ontologySource": "http://ohsu.edu/cgd/",
+      	"id": "1b6442aa",
+      	"name": "GIST with biomarker KIT  wild type no mutation"
+    	},
+    	"id": null,
+    	"ageOfOnset": null,
+    	"qualifier": null,
+    	"description": null
+  	},
+  	"id": "<http://ohsu.edu/cgd/0531e5c5>",
+  	"features": [
+    	{
+      	"start": null,
+      	"featureSetId": "",
+      	"strand": null,
+      	"parentIds": [],
+      	"id": "<http://ohsu.edu/cgd/0531e5c5>",
+      	"referenceName": null,
+      	"attributes": {
+        	"vals": {}
+      	},
+      	"end": null,
+      	"featureType": {
+        	"ontologySource": "<http://ohsu.edu/cgd/",
+        	"id": "1b6442aa>",
+        	"name": "<http://ohsu.edu/cgd/1b6442aa>"
+      	}
+    	}
+  	],
+  	"environmentalContexts": [],
+  	"description": null
+	}
+  ],
+  "nextPageToken": null
+}
+</pre>
+The links in the `associations` field could (hypothetically) be followed to discover that [patients with wild-type *KIT* and GIST have decreased sensitivity to therapy with imatinib](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2651076/).
+
+If I wanted to be more specific, I could specify *KIT* by its `ExternalIdentifier` in the `feature` field:
+<pre>
+...
+  "feature": {
+    "ids": [
+      {
+        "identifier": "4841bf74",
+        "version": "*",
+        "database": "http:\/\/ohsu.edu\/cgd\/"
+      }
+  ...
+</pre>
+If I left the `phenotype` and `evidence` fields as `null`, I would receive back all associations which involve *KIT* as a feature.
+
+2) 
+
 
 ## Future work
 (copied from old document)
