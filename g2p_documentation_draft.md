@@ -70,7 +70,7 @@ Data types used by both `SearchFeaturesRequest` and `SearchFeaturesResponse`:
 
 ## Use cases
 
-1) As a clinician or a genomics researcher, I may have a patient with Gastrointestinal stromal tumor (or `GIST`) and a proposed drug for treatment (`imatinib`). In order to identify whether the patient would respond well to treatment with with the drug, I need a list of features (e.g. genotypes) which are associated with the sensitivity of GIST to imatinib. Suppose I am also interested in a specific gene, `KIT`, which is implicated in the pathogenesis of several cancer types.
+1) As a clinician or a genomics researcher, I may have a patient with Gastrointestinal stromal tumor, `GIST`, and a proposed drug for treatment, `imatinib`. In order to identify whether the patient would respond well to treatment with the drug, I need a list of features (e.g. genotypes) which are associated with the sensitivity of GIST to imatinib. Suppose I am also interested in a specific gene, `KIT`, which is implicated in the pathogenesis of several cancer types.
 
 I could then submit the following query to `/genotypephenotype/search`, formatted in JSON:
 <pre>
@@ -156,8 +156,9 @@ If I wanted to be more specific, I could specify *KIT* by its `ExternalIdentifie
 </pre>
 If I left the `phenotype` and `evidence` fields as `null`, I would receive back all associations which involve *KIT* as a feature.
 
-2) 
+2) As a non-Hodgkin's lymphoma researcher, I may know that the gene *CD20* has abnormal expression in [Hodgkin's lymphoma](http://purl.obolibrary.org/obo/DOID_8567). I might be interested in knowing if *CD20* also has abnormal expression in [non-Hodgkin lymphoma](http://purl.obolibrary.org/obo/DOID_0060060). Therefore I could perform a query with *CD20* as a feature, non-Hodgkin's lymphoma as a phenotype, and [DNA microarray](http://www.ontobee.org/ontology/OBI?iri=http://purl.obolibrary.org/obo/OBI_0400148) as the evidence type.
 
+3) As a genetic counselor, I may be wondering if a mutation in one of my clients' genes has ever been associated with a disease. I could then do a query based on the gene name as the feature and [disease](http://purl.obolibrary.org/obo/DOID_4) as the phenotype.
 
 ## Future work
 (copied from old document)
